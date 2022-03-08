@@ -18,7 +18,17 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+hypothesis = sigmoid(X * theta)
 
+regularization_term = lambda / (2*m) * sum( theta(2:size(theta) ,1) .^ 2 )
+
+% Cost Function
+J = (1 / m) * sum( -(y' * log(hypothesis)) - ((1-y)' * (log(1 - hypothesis))) )  + regularization_term
+
+
+grad(1,1) = (1/m) * ( (hypothesis - y)' * X(:, 1) )' 
+
+grad(2:size(theta, 1), 1) = (1/m) * ( (hypothesis - y)' * X(:, 2:size(X, 2)) )'  + (lambda/m) * theta(2:size(theta, 1), 1) 
 
 
 
